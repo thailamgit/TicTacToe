@@ -1,30 +1,42 @@
-import { useState } from 'react';
+import React, { useState } from "react"
 
-export default function MyApp() {
-  const [count, setCount] = useState(0);
+type SquareProps = {
+  value: string
+  onSquareClick: () => void
+}
 
-  function handleClick() {
-    setCount(count + 1);
+function Square ({value, onSquareClick}: SquareProps) {
+  
+  // const [value, setValue] = useState('')
+  // function HandelClick () {
+  //   setValue('X')
+  // }
+  return (<button className="square" onClick={onSquareClick}>{value}</button>)
+}
+
+export default function Board() {
+  const [squares, setSquares] = useState(Array(9).fill('') as string[])
+  function handleClick(i: number) {
+    const nextSquares = squares.slice()
+    nextSquares[i] = "X"
+    setSquares(nextSquares)
   }
-
   return (
-    <div>
-      <h1>Counters that update together</h1>
-      <MyButton count={count} onClick={handleClick} />
-      <MyButton count={count} onClick={handleClick} />
-    </div>
-  );
-}
-
-type MyButtonProps = {
-  count: number
-  onClick: () => void
-}
-
-function MyButton({ count, onClick }: MyButtonProps) {
-  return (
-    <button onClick={onClick}>
-      Clicked {count} times
-    </button>
-  );
+    <>
+      <div className="board-row">
+        <Square value={squares[0] }onSquareClick={() => handleClick(0)}/>
+        <Square value={squares[1] }onSquareClick={() => handleClick(1)}/>
+        <Square value={squares[2] }onSquareClick={() => handleClick(2)}/>
+      </div>
+      <div className="board-row">
+        <Square value={squares[3] }onSquareClick={() => handleClick(3)}/>
+        <Square value={squares[4] }onSquareClick={() => handleClick(4)}/>
+        <Square value={squares[5] }onSquareClick={() => handleClick(5)}/>
+      </div>
+      <div className="board-row">
+        <Square value={squares[6] }onSquareClick={() => handleClick(6)}/>
+        <Square value={squares[7] }onSquareClick={() => handleClick(7)}/>
+        <Square value={squares[8] }onSquareClick={() => handleClick(8)}/>
+      </div>
+    </>)
 }
